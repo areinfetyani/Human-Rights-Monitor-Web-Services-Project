@@ -2,23 +2,23 @@
 
 A full-stack **Human Rights Monitoring Management Information System (MIS)** designed to track human rights violations, manage victim and witness records, generate incident reports, and provide data visualization and analysis.
 
-## 👥 Team Members
+## Team Members
 
 * **Ehab Ellati** — 1211567
 * **Rami Tawafsha** — 1212400
 * **Areen Fetyani** — 1212673
 
----
 
-## 🚀 Project Overview
+
+## Project Overview
 
 This system is developed as part of the COMP4382 Final Project to manage cases of human rights violations and streamline reporting and data analysis. It provides role-based access control for different user types including **Admin**, **Employee**, and **Reporter**.
 
----
 
-## 🛠️ Technologies Used
 
-### 🔧 Backend
+## 🛠Technologies Used
+
+### Backend
 
 * **FastAPI** – For building high-performance RESTful APIs.
 * **Pydantic** – For data validation and schema modeling.
@@ -29,7 +29,7 @@ This system is developed as part of the COMP4382 Final Project to manage cases o
 * **Uvicorn** – ASGI server to run FastAPI apps.
 * **Python** – Main backend programming language.
 
-### 🖼️ Frontend
+### 🖼Frontend
 
 * **React.js** – For building the interactive and modular user interface.
 * **Axios** – For making HTTP requests to the FastAPI backend.
@@ -37,18 +37,17 @@ This system is developed as part of the COMP4382 Final Project to manage cases o
 * **CSS3** – For styling all UI components with responsive design.
 * **Base64 File Handling** – For uploading and displaying evidence files securely.
 
-### 📦 Dev Tools & Deployment
+### Dev Tools & Deployment
 
 * **VS Code** – Code editing.
 * **Postman** – API testing.
 * **MongoDB Compass** – GUI for MongoDB.
 * **Git & GitHub** – Version control and team collaboration.
 
----
 
-## 📂 Project Structure
+## Project Structure
 
-### 🧠 Modules Implemented
+### Modules Implemented
 
 1. **Case Management**
 
@@ -69,9 +68,9 @@ This system is developed as part of the COMP4382 Final Project to manage cases o
    * Login and role-based navigation.
    * JWT tokens stored in localStorage.
 
----
 
-## 👤 User Roles & Access
+
+## User Roles & Access
 
 | Role                   | Access                                                     |
 | ---------------------- | ---------------------------------------------------------- |
@@ -79,9 +78,9 @@ This system is developed as part of the COMP4382 Final Project to manage cases o
 | **Employee**           | Access to Case Management and Victim modules only          |
 | **Reporter**           | Can submit reports only and view analytics                 |
 
----
 
-## 📸 Key Features
+
+## Key Features
 
 * 📁 **Case CRUD Operations**
 * 🧾 **Incident Reports with Evidence Upload**
@@ -94,9 +93,9 @@ This system is developed as part of the COMP4382 Final Project to manage cases o
 * 🧾 **Archive Functionality for Deleted Records**
 * 🕓 **Date Filters and Time-Based Queries**
 
----
 
-## 🧪 How to Run
+
+## How to Run
 
 1. **Backend (FastAPI)**
 
