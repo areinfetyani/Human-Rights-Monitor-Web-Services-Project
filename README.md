@@ -16,7 +16,7 @@ This system is developed as part of the COMP4382 Final Project to manage cases o
 
 
 
-## 🛠Technologies Used
+## Technologies Used
 
 ### Backend
 
@@ -29,7 +29,7 @@ This system is developed as part of the COMP4382 Final Project to manage cases o
 * **Uvicorn** – ASGI server to run FastAPI apps.
 * **Python** – Main backend programming language.
 
-### 🖼Frontend
+### Frontend
 
 * **React.js** – For building the interactive and modular user interface.
 * **Axios** – For making HTTP requests to the FastAPI backend.
@@ -82,16 +82,16 @@ This system is developed as part of the COMP4382 Final Project to manage cases o
 
 ## Key Features
 
-* 📁 **Case CRUD Operations**
-* 🧾 **Incident Reports with Evidence Upload**
-* 🧍 **Victim Database with Risk Assessment**
-* 📊 **Interactive Charts and Analytics**
-* 🔐 **JWT Authentication**
-* 🧠 **Role-based Navigation and Authorization**
-* 🧼 **Real-time Form Validation**
-* 🌍 **Country/Region Auto-fill using API**
-* 🧾 **Archive Functionality for Deleted Records**
-* 🕓 **Date Filters and Time-Based Queries**
+* **Case CRUD Operations**
+* **Incident Reports with Evidence Upload**
+* **Victim Database with Risk Assessment**
+* **Interactive Charts and Analytics**
+* **JWT Authentication**
+* **Role-based Navigation and Authorization**
+* **Real-time Form Validation**
+* **Country/Region Auto-fill using API**
+* **Archive Functionality for Deleted Records**
+* **Date Filters and Time-Based Queries**
 
 
 
