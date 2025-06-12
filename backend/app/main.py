@@ -4,7 +4,8 @@ from app.routes import case_routes
 from app.routes import report_routes
 from app.routes import victim_routes
 from app.routes import analysis_routes
-
+from app.routes import dashboard_stats
+from app.routes import auth_routes 
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
@@ -29,5 +30,6 @@ app.mount("/Evidence", StaticFiles(directory="Evidence"), name="Evidence")
 app.include_router(case_routes.router, prefix="/cases", tags=["cases"])
 app.include_router(report_routes.router, prefix="/reports", tags=["reports"])
 app.include_router(victim_routes.router, prefix="/victims", tags=["victims"])
-
 app.include_router(analysis_routes.router, prefix="/analytics", tags=["analytics"])
+app.include_router(dashboard_stats.router, prefix="/dashboard", tags=["dashboard"])
+app.include_router(auth_routes.router)

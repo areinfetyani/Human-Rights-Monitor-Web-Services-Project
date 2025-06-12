@@ -1,87 +1,134 @@
-
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
   margin: 0;
-  background: #eef3f7;
+  background: #f1f5f9;
 }
-
 
 .dashboard-layout {
   display: flex;
   height: 100vh;
 }
 
-
 .dashboard-sidebar {
-  width: 260px;
-  background: linear-gradient(145deg, #004d40, #00695c);
+  width: 250px;
+  background: linear-gradient(to bottom, #0f172a, #1e293b);
   color: white;
-  padding: 30px 20px 60px 20px;
-  box-shadow: 3px 0 20px rgba(0, 0, 0, 0.2);
+  padding: 25px 20px;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
 }
 
 .sidebar-title {
-  font-size: 24px;
-  margin-bottom: 30px;
+  font-size: 22px;
+  margin-bottom: 25px;
   font-weight: 700;
   text-align: center;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid #334155;
   padding-bottom: 10px;
+  color: #38bdf8;
 }
 
 .sidebar-section-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  margin: 15px 0 5px;
-  color: #bbf4ee;
+  margin: 16px 0 8px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-
 .sidebar-button {
-  background: transparent;
+  background: none;
   border: none;
-  color: #ffffff;
-  font-size: 16px;
+  color: #e2e8f0;
+  font-size: 15px;
   text-align: left;
   padding: 10px 14px;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   display: block;
   width: 100%;
-  white-space: nowrap;
 }
 
 .sidebar-button:hover,
 .sidebar-button.active {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.03);
+  background-color: #2563eb;
+  color: white;
+  transform: scale(1.02);
   font-weight: 600;
-  color: #e0f7fa;
 }
-
 
 .dashboard-content {
   flex: 1;
   padding: 40px;
-  background: linear-gradient(to bottom, #ffffff, #e3f2fd);
+  background: #f8fafc;
   overflow-y: auto;
   animation: fadeIn 0.5s ease-in;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
   border-radius: 0 0 0 20px;
 }
 
-
-.dashboard-content > {
+.intro-section {
   background: #ffffff;
   padding: 30px;
   border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
 }
+.dashboard-home {
+  padding: 20px;
+}
+
+.dashboard-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.dashboard-subtitle {
+  font-size: 16px;
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+.dashboard-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.card {
+  background: linear-gradient(to right, #e0f2fe, #f0f9ff);
+  border-radius: 16px;
+  padding: 20px;
+  flex: 1 1 200px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+  font-size: 30px;
+  margin: 12px 0 6px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.card p {
+  font-size: 15px;
+  color: #475569;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -90,5 +137,20 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+@media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+  .dashboard-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .sidebar-button {
+    white-space: nowrap;
+    flex: 1;
   }
 }

@@ -68,7 +68,11 @@ const AddVictim = () => {
     <form onSubmit={handleSubmit} className="form">
       <h3>Add New Victim</h3>
       <label><input type="checkbox" name="anonymous" checked={form.anonymous} onChange={handleChange} /> Anonymous</label>
-      <input name="gender" placeholder="Gender" onChange={handleChange} />
+      <select name="gender" value={form.demographics.gender} onChange={handleChange}>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
       <input name="age" placeholder="Age" type="number" onChange={handleChange} />
       <input name="ethnicity" placeholder="Ethnicity" onChange={handleChange} />
       <input name="occupation" placeholder="Occupation" onChange={handleChange} />

@@ -1,3 +1,6 @@
+// Updated AddCase.jsx with required field validation (with red asterisk)
+// No core logic changed; only improved validation and field highlighting
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AddCase.css";
@@ -84,7 +87,14 @@ const AddCase = () => {
   };
 
   const addPerpetrator = () => {
-    if (!form.perpetratorName || !form.perpetratorType) return;
+    if (!form.perpetratorName || !form.perpetratorType) {
+      setErrors((prev) => ({
+        ...prev,
+        perpetratorName: "Required",
+        perpetratorType: "Required",
+      }));
+      return;
+    }
     setForm((prev) => ({
       ...prev,
       perpetrators: [
@@ -123,7 +133,10 @@ const AddCase = () => {
     required.forEach((field) => {
       if (!form[field]) errs[field] = "Required";
     });
-    if (!form.latitude || !form.longitude) errs.country = "Select valid country";
+    if (!form.latitude || !form.longitude) errs.country = "Select a valid country";
+    if (form.perpetrators.length === 0) {
+      errs.perpetrators = "At least one perpetrator is required";
+    }
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -195,171 +208,198 @@ const AddCase = () => {
       reader.readAsDataURL(file);
     });
 
-  return (
-    <div className="form-container">
-      <form className="case-form" onSubmit={handleSubmit} noValidate>
-        <h2 className="form-title">Add New Case</h2>
-        <div className="form-grid">
-          {["case_id", "title", "created_by"].map((field) => (
-            <div className="form-group" key={field}>
-              <label htmlFor={field}>{field.replace("_", " ").toUpperCase()}</label>
-              <input
-                type="text"
-                id={field}
-                name={field}
-                value={form[field]}
-                onChange={handleChange}
-              />
-              {errors[field] && <div className="error-text">{errors[field]}</div>}
-            </div>
-          ))}
-
-          <div className="form-group">
-            <label>Violation Types (comma-separated)</label>
+  // Full return section with validation and red asterisks (AddCase.jsx)
+return (
+  <div className="form-container">
+    <form className="case-form" onSubmit={handleSubmit} noValidate>
+      <h2 className="form-title">Add New Case</h2>
+      <div className="form-grid">
+        {["case_id", "title", "created_by"].map((field) => (
+          <div className="form-group" key={field}>
+            <label htmlFor={field}>
+              {field.replace("_", " ").toUpperCase()}<span style={{ color: "red" }}> *</span>
+            </label>
             <input
-              name="violation_types"
-              value={form.violation_types}
+              type="text"
+              id={field}
+              name={field}
+              value={form[field]}
               onChange={handleChange}
             />
+            {errors[field] && <div className="error-text">{errors[field]}</div>}
           </div>
+        ))}
 
+        <div className="form-group">
+          <label>
+            Violation Types (comma-separated)<span style={{ color: "red" }}> *</span>
+          </label>
+          <input
+            name="violation_types"
+            value={form.violation_types}
+            onChange={handleChange}
+          />
+          {errors.violation_types && <div className="error-text">{errors.violation_types}</div>}
+        </div>
+
+        <div className="form-group full">
+          <label>
+            Description<span style={{ color: "red" }}> *</span>
+          </label>
+          <textarea
+            name="description"
+            value={form.description}
+            onChange={handleChange}
+            rows="3"
+          />
+          {errors.description && <div className="error-text">{errors.description}</div>}
+        </div>
+
+        <div className="form-group">
+          <label>Status</label>
+          <select name="status" value={form.status} onChange={handleChange}>
+            <option value="new">New</option>
+            <option value="under_investigation">Under Investigation</option>
+            <option value="resolved">Resolved</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Priority</label>
+          <select name="priority" value={form.priority} onChange={handleChange}>
+            <option value="low">Low</option>
+            <option value="moderate">Moderate</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>
+            Country<span style={{ color: "red" }}> *</span>
+          </label>
+          <select onChange={handleCountryChange} value={form.country}>
+            <option value="">Select Country</option>
+            {countries.map((c) => (
+              <option key={c.name} value={c.name}>{c.name}</option>
+            ))}
+          </select>
+          {errors.country && <div className="error-text">{errors.country}</div>}
+        </div>
+
+        <div className="form-group">
+          <label>Region</label>
+          <input value={form.region} disabled />
+        </div>
+
+        <div className="form-group">
+          <label>Latitude</label>
+          <input value={form.latitude} disabled />
+        </div>
+
+        <div className="form-group">
+          <label>Longitude</label>
+          <input value={form.longitude} disabled />
+        </div>
+
+        <div className="form-group">
+          <label>
+            Date Occurred<span style={{ color: "red" }}> *</span>
+          </label>
+          <input type="date" name="date_occurred" onChange={handleChange} value={form.date_occurred} />
+          {errors.date_occurred && <div className="error-text">{errors.date_occurred}</div>}
+        </div>
+
+        <div className="form-group">
+          <label>
+            Date Reported<span style={{ color: "red" }}> *</span>
+          </label>
+          <input type="date" name="date_reported" onChange={handleChange} value={form.date_reported} />
+          {errors.date_reported && <div className="error-text">{errors.date_reported}</div>}
+        </div>
+
+        <div className="form-group full">
+          <label>
+            Evidence Description<span style={{ color: "red" }}> *</span>
+          </label>
+          <textarea
+            name="evidenceDescription"
+            value={form.evidenceDescription}
+            onChange={handleChange}
+            rows="2"
+          />
+          {errors.evidenceDescription && <div className="error-text">{errors.evidenceDescription}</div>}
+        </div>
+
+        <div className="form-group">
+          <label>Upload Evidence</label>
+          <input type="file" onChange={handleFileChange} />
+        </div>
+
+        <div className="form-group">
+          <label>Detected Evidence Type</label>
+          <input value={form.evidenceType} disabled />
+        </div>
+
+        <div className="form-group">
+          <label>
+            Perpetrator Name<span style={{ color: "red" }}> *</span>
+          </label>
+          <input name="perpetratorName" value={form.perpetratorName} onChange={handleChange} />
+          {errors.perpetratorName && <div className="error-text">{errors.perpetratorName}</div>}
+        </div>
+
+        <div className="form-group">
+          <label>
+            Perpetrator Type<span style={{ color: "red" }}> *</span>
+          </label>
+          <input name="perpetratorType" value={form.perpetratorType} onChange={handleChange} />
+          {errors.perpetratorType && <div className="error-text">{errors.perpetratorType}</div>}
+        </div>
+
+        <div className="form-group">
+          <button type="button" className="submit-btn" onClick={addPerpetrator}>➕ Add Perpetrator</button>
+        </div>
+
+        {errors.perpetrators && <div className="form-group full"><div className="error-text">{errors.perpetrators}</div></div>}
+
+        {form.perpetrators.length > 0 && (
           <div className="form-group full">
-            <label>Description</label>
-            <textarea
-              name="description"
-              value={form.description}
-              onChange={handleChange}
-              rows="3"
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Status</label>
-            <select name="status" value={form.status} onChange={handleChange}>
-              <option value="new">New</option>
-              <option value="under_investigation">Under Investigation</option>
-              <option value="resolved">Resolved</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Priority</label>
-            <select name="priority" value={form.priority} onChange={handleChange}>
-              <option value="low">Low</option>
-              <option value="moderate">Moderate</option>
-              <option value="high">High</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Country</label>
-            <select onChange={handleCountryChange} value={form.country}>
-              <option value="">Select Country</option>
-              {countries.map((c) => (
-                <option key={c.name} value={c.name}>{c.name}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Region</label>
-            <input value={form.region} disabled />
-          </div>
-
-          <div className="form-group">
-            <label>Latitude</label>
-            <input value={form.latitude} disabled />
-          </div>
-
-          <div className="form-group">
-            <label>Longitude</label>
-            <input value={form.longitude} disabled />
-          </div>
-
-          <div className="form-group">
-            <label>Date Occurred</label>
-            <input type="date" name="date_occurred" onChange={handleChange} value={form.date_occurred} />
-          </div>
-
-          <div className="form-group">
-            <label>Date Reported</label>
-            <input type="date" name="date_reported" onChange={handleChange} value={form.date_reported} />
-          </div>
-
-          <div className="form-group full">
-            <label>Evidence Description</label>
-            <textarea
-              name="evidenceDescription"
-              value={form.evidenceDescription}
-              onChange={handleChange}
-              rows="2"
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Upload Evidence</label>
-            <input type="file" onChange={handleFileChange} />
-          </div>
-
-          <div className="form-group">
-            <label>Detected Evidence Type</label>
-            <input value={form.evidenceType} disabled />
-          </div>
-
-          <div className="form-group">
-            <label>Perpetrator Name</label>
-            <input name="perpetratorName" value={form.perpetratorName} onChange={handleChange} />
-          </div>
-
-          <div className="form-group">
-            <label>Perpetrator Type</label>
-            <input name="perpetratorType" value={form.perpetratorType} onChange={handleChange} />
-          </div>
-
-          <div className="form-group">
-            <button type="button" className="submit-btn" onClick={addPerpetrator}>➕ Add Perpetrator</button>
-          </div>
-
-          {form.perpetrators.length > 0 && (
-            <div className="form-group full">
-              <div className="table-container">
-                <table className="case-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th>Action</th> {/* Add action column for delete */}
+            <div className="table-container">
+              <table className="case-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {form.perpetrators.map((p, idx) => (
+                    <tr key={idx}>
+                      <td>{p.name}</td>
+                      <td>{p.type}</td>
+                      <td>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setForm((prev) => ({
+                              ...prev,
+                              perpetrators: prev.perpetrators.filter((_, index) => index !== idx),
+                            }))
+                          }
+                        >
+                          ❌
+                        </button>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {form.perpetrators.map((p, idx) => (
-                      <tr key={idx}>
-                        <td>{p.name}</td>
-                        <td>{p.type}</td>
-                        <td>
-                          {/* Delete button to remove a perpetrator */}
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setForm((prev) => ({
-                                ...prev,
-                                perpetrators: prev.perpetrators.filter((_, index) => index !== idx),
-                              }))
-                            }
-                          >
-                            ❌
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          )}
+          </div>
+        )}
 
-
-          <div className="form-group full">
+        <div className="form-group full">
           <label>Select Victim (Optional)</label>
           <select
             value={form.selectedVictimId}
@@ -376,9 +416,7 @@ const AddCase = () => {
                 </option>
               ))}
           </select>
-          <button type="button" className="submit-btn" onClick={addVictim}>
-            ➕ Add Victim
-          </button>
+          <button type="button" className="submit-btn" onClick={addVictim}>➕ Add Victim</button>
         </div>
 
         {form.victims.length > 0 && (
@@ -422,13 +460,10 @@ const AddCase = () => {
             </div>
           </div>
         )}
-
-        </div>
-
-        <button type="submit" className="submit-btn">Submit Case</button>
-      </form>
-    </div>
-  );
+      </div>
+      <button type="submit" className="submit-btn">Submit Case</button>
+    </form>
+  </div>
+);
 };
-
 export default AddCase;

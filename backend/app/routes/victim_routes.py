@@ -6,6 +6,7 @@ from typing import List
 from bson import ObjectId
 from app.database import db
 from app.models import victim as model
+from app.models import case_model 
 
 router = APIRouter()
 
@@ -56,15 +57,45 @@ def get_cases_with_victim_info():
         cases_with_victim.append(case)
     return cases_with_victim
 
+# @router.post("/{victim_id}/assign/{case_id}")
+# def assign_victim_to_case(victim_id: str, case_id: str):
+#     result = db.victims.update_one(
+#         {"_id": ObjectId(victim_id)},
+#         {"$addToSet": {"cases_involved": case_id}, "$set": {"updated_at": datetime.utcnow()}}
+#     )
+#     if result.matched_count == 0:
+#         raise HTTPException(status_code=404, detail="Victim not found")
+#     return {"message": "Victim assigned to case successfully"}
+
 @router.post("/{victim_id}/assign/{case_id}")
 def assign_victim_to_case(victim_id: str, case_id: str):
-    result = db.victims.update_one(
-        {"_id": ObjectId(victim_id)},
-        {"$addToSet": {"cases_involved": case_id}, "$set": {"updated_at": datetime.utcnow()}}
-    )
-    if result.matched_count == 0:
+    now = datetime.utcnow()
+
+    victim = db.victims.find_one({"_id": ObjectId(victim_id)})
+    if not victim:
         raise HTTPException(status_code=404, detail="Victim not found")
-    return {"message": "Victim assigned to case successfully"}
+
+    case = case_model.cases.find_one({"case_id": case_id})
+    if not case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    db.victims.update_one(
+        {"_id": ObjectId(victim_id)},
+        {
+            "$addToSet": {"cases_involved": case_id},
+            "$set": {"updated_at": now}
+        }
+    )
+
+    case_model.cases.update_one(
+        {"case_id": case_id},
+        {
+            "$addToSet": {"victims": ObjectId(victim_id)},
+            "$set": {"updated_at": now}
+        }
+    )
+
+    return {"message": f"✅ Victim {victim_id} assigned to case {case_id} successfully."}
 
 @router.post("/")
 def add_victim(victim: model.VictimCreate):

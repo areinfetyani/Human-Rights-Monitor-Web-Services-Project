@@ -16,9 +16,11 @@ def serialize_case(case):
         case["created_by"] = str(case["created_by"])
     return case
 
-# @router.get("/cases/")
-# def get_cases():
+# @router.get("/")
+# def get_all_cases():
 #     return [serialize_case(case) for case in model.cases.find()]
+
+
 
 @router.get("/archive")
 def get_archive_cases():
@@ -65,6 +67,12 @@ def add_case(case: model.Case):
         )
 
     return {"message": "✅ Case and evidence file saved successfully."}
+@router.get("/status-history")
+def get_all_status_changes():
+    history = list(model.case_status_history.find())
+    for entry in history:
+        entry["_id"] = str(entry["_id"])
+    return history
 
 @router.get("/{case_id}")
 def get_case_by_id(case_id: str):
@@ -167,3 +175,28 @@ def delete_by_case_id(case_id: str):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.patch("/assign-victims/{case_id}")
+def assign_victims_to_case(case_id: str, victim_ids: List[str]):
+    from bson import ObjectId
+    from ..models import case_model as model
+
+    case = model.cases.find_one({"case_id": case_id})
+    if not case:
+        raise HTTPException(status_code=404, detail=f"Case {case_id} not found.")
+
+    # Merge existing victims with new ones
+    existing = set(str(v) for v in case.get("victims", []))
+    new_valid = [ObjectId(v) for v in victim_ids if ObjectId.is_valid(v)]
+    merged = list(existing.union(str(v) for v in new_valid))
+
+    model.cases.update_one({"case_id": case_id}, {"$set": {"victims": merged}})
+    
+    for vid in new_valid:
+        model.db.victims.update_one(
+            {"_id": vid},
+            {"$addToSet": {"cases_involved": case_id}}
+        )
+
+    return {"message": f"✅ Victims assigned to case {case_id}"}

@@ -1,0 +1,47 @@
+.assign-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.assign-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.dropdown-group {
+  margin-bottom: 20px;
+}
+
+.dropdown-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.dropdown-group select {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.assign-btn {
+  background-color: #2c3e50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.message {
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: bold;
+}
