@@ -23,7 +23,6 @@ This system is developed as part of the COMP4382 Final Project to manage cases o
 * **FastAPI** – For building high-performance RESTful APIs.
 * **Pydantic** – For data validation and schema modeling.
 * **MongoDB** – NoSQL database for storing case, victim, report, and analysis data.
-* **Motor** – Async MongoDB driver for FastAPI.
 * **JWT (JSON Web Token)** – For secure authentication and role-based authorization.
 * **bcrypt** – For password hashing.
 * **Uvicorn** – ASGI server to run FastAPI apps.
@@ -33,7 +32,6 @@ This system is developed as part of the COMP4382 Final Project to manage cases o
 
 * **React.js** – For building the interactive and modular user interface.
 * **Axios** – For making HTTP requests to the FastAPI backend.
-* **React Router** – For frontend routing and navigation.
 * **CSS3** – For styling all UI components with responsive design.
 * **Base64 File Handling** – For uploading and displaying evidence files securely.
 
